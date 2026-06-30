@@ -10,21 +10,22 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
     const articles = Object.fromEntries(formData.entries());
-    if(formIsValid(articles)){
-        const json = JSON.stringify(articles);
-        const response = await fetch("https://restapi.fr/api/article", {
-            method: "POST",
-            body: json,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+    if (formIsValid(articles)) {
+      const json = JSON.stringify(articles);
+      const response = await fetch("https://restapi.fr/api/article", {
+        method: "POST",
+        body: json,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        const article = await response.json();
-        console.log(article);
+      if (response.status < 299) {
+        location.assign("../index.html");
+      }
     }
   } catch (e) {
-    console.log('erreur : ', e);
+    console.log("erreur : ", e);
   }
 });
 
