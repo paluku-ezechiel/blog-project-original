@@ -12,6 +12,5 @@ export default defineConfig({
                 form: resolve(__dirname, "./src/form/form.html")
             }
         }
-
     }
 });
