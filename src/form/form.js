@@ -1,4 +1,4 @@
 import "../assets/styles/styles.scss";
 import "./form.scss";
 
-const 
+const form = document.querySelector("form");
