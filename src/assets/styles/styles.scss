@@ -7,7 +7,6 @@
 
 .container {
   min-height: 100vh;
-  border: 1px solid red;
   display: grid;
   grid: 
   "header" auto
@@ -58,5 +57,8 @@ header{
 footer{
     grid-area: footer;
     padding: 2rem;
-    border: 1px solid purple;
+    background: var(--dark-grey);
+    font-size: 2rem;
+    color: white;
+    text-align: center;
 }
