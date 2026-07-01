@@ -31,10 +31,6 @@ const createArticles = (articles) => {
     buttonDanger.classList.add("btn", "btn-danger");
     buttonDanger.dataset.id = `${article._id}`;
     buttonDanger.innerText = "Supprimer";
-
-    // 
-
-
     const buttonModifier = document.createElement("button");
     buttonModifier.classList.add("btn", "btn-primary");
     buttonModifier.innerText = "Modifier";
@@ -51,6 +47,24 @@ const createArticles = (articles) => {
 
   articleContainer.innerHTML = "";
   articleContainer.append(...articlesDOM);
+
+  // Evenement du bouton Supprimer
+  const deleteArticles = articleContainer.querySelectorAll(".btn-danger");
+  deleteArticles.forEach((button) => {
+    button.addEventListener("click", async (e) => {
+      const target = e.target;
+      const articleId = target.dataset.id;
+      const response = await fetch(
+        `https://restapi.fr/api/article/${articleId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const body = await response.json();
+      console.log(body);
+      fetchArticles();
+    });
+  });
 };
 
 const fetchArticles = async () => {
