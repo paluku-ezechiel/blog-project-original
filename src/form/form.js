@@ -4,26 +4,70 @@ import "./form.scss";
 const form = document.querySelector("form");
 const btnCancel = document.querySelector(".btn-secondary");
 const errorElement = document.querySelector("#error");
+let articleId;
 let errors = [];
+
+const fillForm = (article) => {
+  const author = document.querySelector("input[name='author']");
+  const img = document.querySelector("input[name='img']");
+  const categories = document.querySelector("input[name='category']");
+  const title = document.querySelector("input[name='title']");
+  const content = document.querySelector("textarea");
+  author.value = article.author || "";
+  img.value = article.img || "";
+  categories.value = article.category;
+  title.value = article.title || "";
+  content.value = article.content || "";
+};
+const initForm = async () => {
+  try {
+    const params = new URL(location.href);
+    articleId = params.searchParams.get("id");
+    if (articleId) {
+      const response = await fetch(
+        `https://restapi.fr/api/article/${articleId}`
+      );
+      if (response.status < 300) {
+        const article = await response.json();
+        fillForm(article);
+      }
+    }
+  } catch (e) {
+    console.log("e : ", e);
+  }
+};
+
+initForm();
 
 btnCancel.addEventListener("click", () => {
   location.assign("../index.html");
 });
 
 form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const articles = Object.fromEntries(formData.entries());
   try {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const articles = Object.fromEntries(formData.entries());
+    const json = JSON.stringify(articles);
+    let response;
     if (formIsValid(articles)) {
-      const json = JSON.stringify(articles);
-      const response = await fetch("https://restapi.fr/api/article", {
-        method: "POST",
-        body: json,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      if (articleId) {
+        response = await fetch(`https://restapi.fr/api/article/${articleId}`, {
+          method:"PATCH",
+          body:json,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      } else {
+        response = await fetch("https://restapi.fr/api/article", {
+          method: "POST",
+          body: json,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }
 
       if (response.status < 299) {
         location.assign("../index.html");

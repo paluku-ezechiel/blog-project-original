@@ -67,11 +67,15 @@ const createArticles = (articles) => {
     });
   });
 
-  // const updateArticle = 
-
+  const updateArticle = articleContainer.querySelectorAll(".btn-primary");
+  updateArticle.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const target = e.target;
+      const articleId = target.dataset.id;
+      location.assign(`./form/form.html?id=${articleId}`);
+    });
+  });
 };
-
-
 
 const fetchArticles = async () => {
   const response = await fetch("https://restapi.fr/api/article");
