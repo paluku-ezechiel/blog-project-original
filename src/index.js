@@ -33,6 +33,7 @@ const createArticles = (articles) => {
     buttonDanger.innerText = "Supprimer";
     const buttonModifier = document.createElement("button");
     buttonModifier.classList.add("btn", "btn-primary");
+    buttonModifier.dataset.id = `${article._id}`;
     buttonModifier.innerText = "Modifier";
     articleActions.append(buttonModifier, buttonDanger);
     articleDOM.append(
@@ -65,7 +66,12 @@ const createArticles = (articles) => {
       fetchArticles();
     });
   });
+
+  // const updateArticle = 
+
 };
+
+
 
 const fetchArticles = async () => {
   const response = await fetch("https://restapi.fr/api/article");

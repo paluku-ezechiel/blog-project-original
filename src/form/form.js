@@ -2,8 +2,13 @@ import "../assets/styles/styles.scss";
 import "./form.scss";
 
 const form = document.querySelector("form");
+const btnCancel = document.querySelector(".btn-secondary");
 const errorElement = document.querySelector("#error");
 let errors = [];
+
+btnCancel.addEventListener("click", () => {
+  location.assign("../index.html");
+});
 
 form.addEventListener("submit", async (e) => {
   try {
