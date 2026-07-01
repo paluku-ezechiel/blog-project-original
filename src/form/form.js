@@ -30,7 +30,13 @@ form.addEventListener("submit", async (e) => {
 });
 
 const formIsValid = (articles) => {
-  if (!articles.author || !articles.category || !articles.content) {
+  if (
+    !articles.author ||
+    !articles.category ||
+    !articles.content ||
+    !articles.img ||
+    !articles.title
+  ) {
     errors.push("S'il vous plait remplissez tous les champs");
   } else {
     errors = [];
