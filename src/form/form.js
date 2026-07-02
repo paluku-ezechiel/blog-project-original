@@ -1,5 +1,6 @@
 import "../assets/styles/styles.scss";
 import "./form.scss";
+import { openModal } from "../assets/javascripts/modal";
 
 const form = document.querySelector("form");
 const btnCancel = document.querySelector(".btn-secondary");
@@ -39,8 +40,13 @@ const initForm = async () => {
 
 initForm();
 
-btnCancel.addEventListener("click", () => {
-  location.assign("../index.html");
+btnCancel.addEventListener("click", async () => {
+  const result = await openModal(
+    "Si vous quittez la page, vous allez perdre votre article"
+  );
+  if (result) {
+    locati9on.assign("../index.html");
+  }
 });
 
 form.addEventListener("submit", async (e) => {
@@ -53,11 +59,11 @@ form.addEventListener("submit", async (e) => {
     if (formIsValid(articles)) {
       if (articleId) {
         response = await fetch(`https://restapi.fr/api/article/${articleId}`, {
-          method:"PATCH",
-          body:json,
+          method: "PATCH",
+          body: json,
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         });
       } else {
         response = await fetch("https://restapi.fr/api/article", {
