@@ -45,7 +45,7 @@ btnCancel.addEventListener("click", async () => {
     "Si vous quittez la page, vous allez perdre votre article"
   );
   if (result) {
-    locati9on.assign("../index.html");
+    location.assign("../index.html");
   }
 });
 
